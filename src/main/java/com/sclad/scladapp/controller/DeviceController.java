@@ -1,4 +1,4 @@
-package com.sclad.scladapp;
+package com.sclad.scladapp.controller;
 
 import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.entity.DeviceType;
