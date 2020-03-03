@@ -5,5 +5,6 @@
                    logicalFilePath="db.changelog-master.xml">
 
     <include file="./001.createRoles.xml" relativeToChangelogFile="true" />
+    <include file="./002.createUser.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

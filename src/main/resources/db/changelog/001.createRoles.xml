@@ -12,5 +12,9 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="set_role_pkey" author="lmisaga">
+        <addPrimaryKey tableName="role" columnNames="id" constraintName="role_pkey" />
+    </changeSet>
+
 </databaseChangeLog>
 

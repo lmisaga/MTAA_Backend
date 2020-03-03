@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="create_user_table" author="lmisaga">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="username" type="VARCHAR(64)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="VARCHAR(64)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="VARCHAR(255)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="set_user_table_pkey" author="lmisaga">
+        <addPrimaryKey tableName="user" columnNames="id" constraintName="user_pkey" />
+    </changeSet>
+
+    <changeSet id="create_user_roles" author="lmisaga">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="set_user_roles_fkeys" author="lmisaga">
+        <addForeignKeyConstraint baseTableName="user_roles" baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role_id"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION" />
+
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION" />
+    </changeSet>
+
+</databaseChangeLog>
