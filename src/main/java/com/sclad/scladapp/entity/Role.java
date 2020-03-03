@@ -5,11 +5,7 @@ import java.util.Set;
 
 @Table
 @Entity
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends AbstractEntity{
 
     @Column
     private String name;
@@ -31,13 +27,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

@@ -6,11 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
-public class Device {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
+public class Device extends AbstractEntity{
 
     @Column
     @NotNull
@@ -32,14 +28,6 @@ public class Device {
 
     @Enumerated(EnumType.STRING)
     private DeviceType deviceType = DeviceType.NOTEBOOK;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getProductName() {
         return productName;

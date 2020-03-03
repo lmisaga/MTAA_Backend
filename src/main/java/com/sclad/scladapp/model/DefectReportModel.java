@@ -1,23 +1,18 @@
-package com.sclad.scladapp.entity;
+package com.sclad.scladapp.model;
 
-import javax.persistence.*;
+import com.sclad.scladapp.entity.Device;
+import com.sclad.scladapp.entity.UploadedFile;
+
 import java.time.LocalDate;
 
-@Entity
-@Table
-public class DefectReport extends AbstractEntity {
+public class DefectReportModel extends AbstractModel {
 
-    @Column(nullable = false)
     private String deviceSerialNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
-    @Column
     private LocalDate dateOfDiscovery;
 
-    @OneToOne
     private UploadedFile attachment;
 
     public String getDeviceSerialNumber() {

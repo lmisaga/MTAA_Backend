@@ -1,19 +1,15 @@
-package com.sclad.scladapp.entity;
+package com.sclad.scladapp.model;
 
+import com.sclad.scladapp.entity.Device;
 
-import javax.persistence.*;
+public class RestockOrderModel extends AbstractModel {
+    //TODO this will be used in RestockOrderController as a front-end model
+    //TODO  (form value from frontend will map onto this model in the controller, basically)
 
-@Entity
-@Table
-public class RestockOrder extends AbstractEntity {
-
-    @Column(nullable = false)
     private Integer quantityToReorder;
 
-    @Column
     private Boolean sendNotification;
 
-    @OneToOne
     private Device device;
 
     public Integer getQuantityToReorder() {
