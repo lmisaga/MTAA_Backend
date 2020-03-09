@@ -1,6 +1,7 @@
 package com.sclad.scladapp.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,7 @@ public class User extends AbstractEntity {
     private String passwordConfirm; //will not be serialized
 
     @Column
+    @Email(message = "Email should be valid: <name>@sClad.sk")
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
