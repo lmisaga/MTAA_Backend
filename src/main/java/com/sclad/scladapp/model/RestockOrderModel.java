@@ -1,6 +1,6 @@
 package com.sclad.scladapp.model;
 
-import com.sclad.scladapp.entity.Device;
+import com.sclad.scladapp.entity.DeviceType;
 
 public class RestockOrderModel extends AbstractModel {
     //TODO this will be used in RestockOrderController as a front-end model
@@ -10,7 +10,11 @@ public class RestockOrderModel extends AbstractModel {
 
     private Boolean sendNotification;
 
-    private Device device;
+    //private Device device;
+
+    private String productName;
+
+    private DeviceType deviceType;
 
     public Integer getQuantityToReorder() {
         return quantityToReorder;
@@ -28,11 +32,19 @@ public class RestockOrderModel extends AbstractModel {
         this.sendNotification = sendNotification;
     }
 
-    public Device getDevice() {
-        return device;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
     }
 }

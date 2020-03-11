@@ -1,7 +1,6 @@
 package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.DefectReport;
-import com.sclad.scladapp.entity.UploadedFile;
 import com.sclad.scladapp.model.RestockOrderModel;
 import com.sclad.scladapp.repository.DefectReportRepository;
 import com.sclad.scladapp.repository.DeviceRepository;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class DefectReportServiceImpl implements DefectReportService {

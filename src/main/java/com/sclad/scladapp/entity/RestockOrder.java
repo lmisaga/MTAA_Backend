@@ -13,8 +13,16 @@ public class RestockOrder extends AbstractEntity {
     @Column
     private Boolean sendNotification;
 
-    @OneToOne
-    private Device device;
+    @Column
+    private String productName;
+
+    @Enumerated(EnumType.STRING)
+    private DeviceType deviceType;
+
+
+    //TODO: lets talk about this
+//    @OneToOne
+//    private Device device;
 
     public Integer getQuantityToReorder() {
         return quantityToReorder;
@@ -32,11 +40,19 @@ public class RestockOrder extends AbstractEntity {
         this.sendNotification = sendNotification;
     }
 
-    public Device getDevice() {
-        return device;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
     }
 }
