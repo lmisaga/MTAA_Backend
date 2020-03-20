@@ -1,6 +1,9 @@
 package com.sclad.scladapp.entity;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,11 +21,10 @@ public class RestockOrder extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     private DeviceType deviceType;
-
-
-    //TODO: lets talk about this
-//    @OneToOne
-//    private Device device;
+    
+    @OneToOne
+    @Fetch(FetchMode.JOIN)
+    private Device device;
 
     public Integer getQuantityToReorder() {
         return quantityToReorder;
@@ -54,5 +56,13 @@ public class RestockOrder extends AbstractEntity {
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }
