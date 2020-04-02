@@ -5,6 +5,9 @@ import com.sclad.scladapp.exceptions.FileStorageException;
 import com.sclad.scladapp.exceptions.UploadedFileNotFoundException;
 import com.sclad.scladapp.repository.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,22 +43,36 @@ public class UploadedFileServiceImpl implements UploadedFileService {
     @Override
     public void remove(Long id) {
         UploadedFile uploadedFile = getById(id);
-        if (uploadedFile != null ) {
+        if (uploadedFile != null) {
             uploadedFileRepository.delete(uploadedFile);
         }
     }
 
     @Override
-    public UploadedFile getByFilename(String fileName) {
-        UploadedFile uploadedFile = uploadedFileRepository.findByFileNameLike(fileName).orElse(null);
+    public ResponseEntity<byte[]> downloadByFileName(String fileName) {
+        UploadedFile uploadedFile = getByFileName(fileName);
         if (uploadedFile != null) {
-            return uploadedFile;
-        } else {
-            throw new UploadedFileNotFoundException();
+            return getFileResponseEntity(uploadedFile);
         }
+        return null;
     }
 
     @Override
+    public ResponseEntity<byte[]> downloadById(Long id) {
+        UploadedFile uploadedFile = getById(id);
+        if (uploadedFile != null) {
+            return getFileResponseEntity(uploadedFile);
+        }
+        return null;
+    }
+
+    public ResponseEntity<byte[]> getFileResponseEntity(UploadedFile uploadedFile) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(uploadedFile.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + uploadedFile.getFileName() + "\"")
+                .body(uploadedFile.getData());
+    }
+
     public UploadedFile getById(Long id) {
         UploadedFile uploadedFile = uploadedFileRepository.findById(id).orElse(null);
         if (uploadedFile != null) {
@@ -63,6 +80,14 @@ public class UploadedFileServiceImpl implements UploadedFileService {
         } else {
             throw new UploadedFileNotFoundException();
         }
+    }
 
+    public UploadedFile getByFileName(String fileName) {
+        UploadedFile uploadedFile = uploadedFileRepository.findByFileName(fileName).orElse(null);
+        if (uploadedFile != null) {
+            return uploadedFile;
+        } else {
+            throw new UploadedFileNotFoundException();
+        }
     }
 }
