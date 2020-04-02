@@ -4,8 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Set;
 
-@Entity
 @Table
+@Entity
 public class User extends AbstractEntity {
 
     @Column(unique = true)

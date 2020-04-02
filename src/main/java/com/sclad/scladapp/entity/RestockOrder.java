@@ -7,7 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "restock_order")
 public class RestockOrder extends AbstractEntity {
 
     @Column(nullable = false)
@@ -21,7 +21,7 @@ public class RestockOrder extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     private DeviceType deviceType;
-    
+
     @OneToOne
     @Fetch(FetchMode.JOIN)
     private Device device;

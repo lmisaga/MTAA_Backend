@@ -69,6 +69,5 @@ public class DefectReportServiceImpl implements DefectReportService {
         } else {
             throw new DefectReportNotFoundException();
         }
-
     }
 }

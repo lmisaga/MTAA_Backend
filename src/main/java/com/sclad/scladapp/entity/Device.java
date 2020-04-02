@@ -1,11 +1,10 @@
 package com.sclad.scladapp.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
 @Table
+@Entity
 public class Device extends AbstractEntity{
 
     @Column
