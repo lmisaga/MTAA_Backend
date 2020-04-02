@@ -1,7 +1,6 @@
 package com.sclad.scladapp.model;
 
 import com.sclad.scladapp.entity.Device;
-import com.sclad.scladapp.entity.UploadedFile;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
@@ -16,8 +15,6 @@ public class DefectReportModel extends AbstractModel {
 
     @NotNull
     private LocalDate dateOfDiscovery;
-
-    private UploadedFile attachment;
 
     private String faultDescription;
 
@@ -46,14 +43,6 @@ public class DefectReportModel extends AbstractModel {
 
     public void setDateOfDiscovery(LocalDate dateOfDiscovery) {
         this.dateOfDiscovery = dateOfDiscovery;
-    }
-
-    public UploadedFile getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(UploadedFile attachment) {
-        this.attachment = attachment;
     }
 
     public String getFaultDescription() {

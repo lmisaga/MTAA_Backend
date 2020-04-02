@@ -8,7 +8,6 @@ import com.sclad.scladapp.repository.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,7 +26,6 @@ public class DefectReportServiceImpl implements DefectReportService {
 
     @Override
     public DefectReport create(DefectReportModel model) {
-        //TODO CHANGE
         DefectReport defectReport = new DefectReport();
         if (deviceService.getById(model.getDevice().getId()) != null) {
             defectReport.setDevice(model.getDevice());
@@ -35,7 +33,6 @@ public class DefectReportServiceImpl implements DefectReportService {
         defectReport.setDateOfDiscovery(model.getDateOfDiscovery());
         defectReport.setDeviceSerialNumber(model.getDeviceSerialNumber());
         defectReport.setFaultDescription(model.getFaultDescription());
-        defectReport.setDateOfDiscovery(LocalDate.now());
         if (model.getAttachmentId() != null) {
             defectReport.setAttachment(uploadedFileRepository.getOne(model.getAttachmentId()));
         }
@@ -54,9 +51,9 @@ public class DefectReportServiceImpl implements DefectReportService {
         DefectReport defectReport = getById(id);
         if (defectReport != null) {
             //check if there is any file attached to fault report
+            defectReportRepository.delete(defectReport);
             if (defectReport.getAttachment() != null && defectReport.getAttachment().getId() != null) {
                 uploadedFileRepository.delete(defectReport.getAttachment());
-                defectReportRepository.delete(defectReport);
             }
         }
     }
