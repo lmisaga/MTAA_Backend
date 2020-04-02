@@ -14,8 +14,11 @@ public class DefectReport extends AbstractEntity {
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
-    @Column
+    @Column(name="date_of_discovery")
     private LocalDate dateOfDiscovery;
+
+    @Column(name="fault_description")
+    private String faultDescription;
 
     @OneToOne
     private UploadedFile attachment;
@@ -50,5 +53,13 @@ public class DefectReport extends AbstractEntity {
 
     public void setAttachment(UploadedFile attachment) {
         this.attachment = attachment;
+    }
+
+    public String getFaultDescription() {
+        return faultDescription;
+    }
+
+    public void setFaultDescription(String faultDescription) {
+        this.faultDescription = faultDescription;
     }
 }

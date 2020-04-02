@@ -1,16 +1,15 @@
 package com.sclad.scladapp.model;
 
+import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.entity.DeviceType;
 
 public class RestockOrderModel extends AbstractModel {
-    //TODO this will be used in RestockOrderController as a front-end model
-    //TODO  (form value from frontend will map onto this model in the controller, basically)
 
     private Integer quantityToReorder;
 
     private Boolean sendNotification;
 
-    //private Device device;
+    private Device device;
 
     private String productName;
 
@@ -46,5 +45,13 @@ public class RestockOrderModel extends AbstractModel {
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }

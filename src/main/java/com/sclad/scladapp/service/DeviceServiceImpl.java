@@ -1,6 +1,7 @@
 package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.Device;
+import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.exceptions.DeviceNotFoundException;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.repository.DeviceRepository;
@@ -30,10 +31,11 @@ public class DeviceServiceImpl implements DeviceService {
         deviceRepository.save(device);
         return device;
     }
+
     @Override
     public Device getById(Long id) {
         return deviceRepository.findById(id)
-                .orElseThrow(()-> new DeviceNotFoundException(id));
+                .orElseThrow(() -> new DeviceNotFoundException(id));
     }
 
     @Override
@@ -42,10 +44,16 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public List<Device> listAllDevicesByType(DeviceType deviceType) {
+        //TODO
+        return null;
+    }
+
+    @Override
     public Device updateDevice(DeviceModel updatedModel, Long id) {
         Device device;
         device = deviceRepository.findById(id)
-                .orElseThrow(()-> new DeviceNotFoundException(id));
+                .orElseThrow(() -> new DeviceNotFoundException(id));
 
         device.setProductName(updatedModel.getProductName());
         device.setProductCode(updatedModel.getProductCode());
@@ -59,11 +67,11 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public void deleteDevice(Long id) {
-       try{
-           deviceRepository.deleteById(id);
-       } catch (EmptyResultDataAccessException e) {
-           throw new DeviceNotFoundException(id);
-       }
+        try {
+            deviceRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new DeviceNotFoundException(id);
+        }
 
     }
 }

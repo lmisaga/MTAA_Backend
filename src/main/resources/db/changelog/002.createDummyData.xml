@@ -56,4 +56,19 @@
         </insert>
     </changeSet>
 
+    <changeSet id="createDummyDataFaultReport" author="lmisaga">
+        <insert tableName="defect_report">
+            <column name="date_of_discovery" value="2020-02-11" />
+            <column name="device_serial_number" value="SN_35263473HAFD" />
+            <column name="fault_description" value="The device is broken. Pls fix" />
+            <column name="device_id" value="1" />
+        </insert>
+        <insert tableName="defect_report">
+            <column name="date_of_discovery" value="2020-03-03" />
+            <column name="device_serial_number" value="SN_BFB7453AFB" />
+            <column name="fault_description" value="Another device broken smh" />
+            <column name="device_id" value="2" />
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

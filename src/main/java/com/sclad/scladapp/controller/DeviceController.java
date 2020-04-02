@@ -1,12 +1,12 @@
 package com.sclad.scladapp.controller;
 
 import com.sclad.scladapp.entity.Device;
+import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.service.DeviceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -14,7 +14,6 @@ import java.util.List;
 public class DeviceController {
 
     private final DeviceService deviceService;
-    private static final Logger logger =  LoggerFactory.getLogger(DeviceController.class);
 
     @Autowired
     public DeviceController(DeviceService deviceService) {
@@ -26,7 +25,7 @@ public class DeviceController {
         return deviceService.create(model);
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/getDeviceDetail/{id}", method = RequestMethod.GET)
     public Device getDeviceDetail(@PathVariable Long id) {
         return deviceService.getById(id);
     }
@@ -36,11 +35,17 @@ public class DeviceController {
         return deviceService.getAllDevices();
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listAllDevicesByType/{deviceType}", method = RequestMethod.GET)
+    public List<Device> listAllDevicesByCategory(@PathVariable DeviceType deviceType) {
+        return deviceService.listAllDevicesByType(deviceType);
+    }
+
+    @RequestMapping(value="/update/{id}", method = RequestMethod.PUT)
     public Device updateDevice(@RequestBody DeviceModel updatedModel, @PathVariable Long id) {
         return deviceService.updateDevice(updatedModel,id);
     }
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public void deleteDevice(@PathVariable Long id) {
         deviceService.deleteDevice(id);
     }
