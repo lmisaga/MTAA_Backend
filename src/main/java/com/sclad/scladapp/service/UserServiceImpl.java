@@ -3,6 +3,8 @@ package com.sclad.scladapp.service;
 import com.sclad.scladapp.entity.Authority;
 import com.sclad.scladapp.entity.User;
 import com.sclad.scladapp.exceptions.UserNotFoundException;
+import com.sclad.scladapp.model.UserModel;
+import com.sclad.scladapp.repository.AuthorityRepository;
 import com.sclad.scladapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,23 +17,32 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
-    public Long register(User user) {
-        if (!user.getPassword().equals(user.getPasswordConfirm()) || user.getUsername() == null) {
+    public Long register(UserModel userModel) {
+        User user = new User();
+        user.setUsername(userModel.getUsername());
+        if (!userModel.getPassword().equals(userModel.getPasswordConfirm())) {
             throw new UsernameNotFoundException("Error in password confirm");
+        } else {
+            user.setPassword(passwordEncoder.encode(userModel.getPassword()));
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(userModel.getEmail());
+        //set "admin" role if username contains "admin," otherwise set user as "user" role
         Authority role = new Authority();
-        role.setUsername(user.getUsername());
-        role.setAuthority(user.getUsername().contains("admin") ? "ROLE_ADMIN" : "ROLE_USER");
-        return userRepository.save(user).getId();
+        role.setUsername(userModel.getUsername());
+        role.setAuthority(userModel.getUsername().contains("admin") ? "ROLE_ADMIN" : "ROLE_USER");
+        userRepository.save(user);
+        authorityRepository.save(role);
+        return user.getId();
     }
 
     @Override

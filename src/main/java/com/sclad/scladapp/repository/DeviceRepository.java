@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
+
     List<Device>  findByDeviceType(DeviceType deviceType);
 }
 

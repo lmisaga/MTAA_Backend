@@ -26,7 +26,7 @@ public class DefectReportController {
     }
 
     @RequestMapping(value = "/getDefectReportById/{id}", method = RequestMethod.GET)
-    public DefectReport getById(@PathVariable Long id) {
+    public DefectReport getById(@PathVariable("id") Long id) {
         return defectReportService.getById(id);
     }
 

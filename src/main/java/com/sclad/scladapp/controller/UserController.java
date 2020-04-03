@@ -1,6 +1,7 @@
 package com.sclad.scladapp.controller;
 
 import com.sclad.scladapp.entity.User;
+import com.sclad.scladapp.model.UserModel;
 import com.sclad.scladapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,12 +22,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getByUsername/{username}", method = RequestMethod.GET)
-    public User getByUsername(@PathVariable String username) {
+    public User getByUsername(@PathVariable("username") String username) {
         return userService.getUserByUsername(username);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Long register(@RequestBody @Valid User user) {
+    public Long register(@RequestBody @Valid UserModel user) {
         return userService.register(user);
     }
 
