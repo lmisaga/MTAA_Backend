@@ -28,7 +28,7 @@
             <column name="quantity_threshold" value="5" />
         </insert>
         <insert tableName="device">
-            <column name="device_type" value="ALL-IN-ONE"/>
+            <column name="device_type" value="ALL_IN_ONE"/>
             <column name="is_reordered" value="true" />
             <column name="product_code" value="REORDERED2_ALLINONE xd" />
             <column name="product_name" value="Product Number 4" />
