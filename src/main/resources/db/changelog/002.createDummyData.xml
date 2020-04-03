@@ -71,4 +71,30 @@
         </insert>
     </changeSet>
 
+    <changeSet id="createDummyAdmin" author="lmisaga">
+        <insert tableName="users">
+            <column name="email" value="admin@sClad.com"/>
+            <column name="password" value="$2a$10$rXWSOtLuCpleuF3tUUztj.G4mDhnE3gR267vavK3tmok4iwdb1jmS" />
+            <column name="username" value="admin" />
+            <column name="enabled" value="true" />
+        </insert>
+        <insert tableName="authorities">
+            <column name="username" value="admin"/>
+            <column name="authority" value="ROLE_ADMIN" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="createDummyUser" author="lmisaga">
+        <insert tableName="users">
+            <column name="email" value="user@sClad.com"/>
+            <column name="password" value="$2a$10$MxKHCVEoDimY97SUxHfPKOhR5jccXdCMbHX6rJKMwHvHkzv/SgArC" />
+            <column name="username" value="user" />
+            <column name="enabled" value="true" />
+        </insert>
+        <insert tableName="authorities">
+            <column name="username" value="user"/>
+            <column name="authority" value="ROLE_USER" />
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

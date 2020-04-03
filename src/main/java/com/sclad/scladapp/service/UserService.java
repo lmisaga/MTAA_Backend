@@ -1,8 +1,15 @@
 package com.sclad.scladapp.service;
 
-import org.springframework.stereotype.Service;
+import com.sclad.scladapp.entity.User;
 
-@Service
 public interface UserService {
+
+    Long register(User user);
+
+    User getUserByUsername(String username);
+
+    void deleteUser(User user);
+
+
 
 }

@@ -2,7 +2,6 @@ package com.sclad.scladapp.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Set;
 
 @Table(name = "users")
 @Entity
@@ -20,10 +19,6 @@ public class User extends AbstractEntity {
     @Column
     @Email(message = "Email should be valid: <name>@sClad.sk")
     private String email;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="user_roles", joinColumns = { @JoinColumn(name="user_id") }, inverseJoinColumns = { @JoinColumn(name="role_id") })
-    private Set<Role> roles; //manual table creation using liquibase was required
 
     public String getUsername() {
         return username;
@@ -47,14 +42,6 @@ public class User extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public String getPasswordConfirm() {

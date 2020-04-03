@@ -70,12 +70,12 @@
     </changeSet>
 
     <changeSet id="createRole" author="lmisaga">
-        <createTable tableName="role">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" />
+        <createTable tableName="authorities">
+            <column name="username" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" />
             </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints unique="true" nullable="false" />
+            <column name="authority" type="VARCHAR(100)">
+                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
@@ -83,42 +83,32 @@
     <changeSet id="createUser" author="lmisaga">
         <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" />
+                <constraints nullable="false" />
             </column>
             <column name="email" type="VARCHAR(255)" />
-            <column name="password" type="VARCHAR(255)">
+            <column name="password" type="VARCHAR(100)">
                 <constraints nullable="false" />
             </column>
-            <column name="username" type="VARCHAR(255)">
-                <constraints unique="true"/>
+            <column name="username" type="VARCHAR(50)">
+                <constraints unique="true" primaryKey="true"/>
             </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="create_user_roles" author="lmisaga">
-        <createTable tableName="user_roles">
-            <column name="user_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="role_id" type="BIGINT">
+            <column name="enabled" type="BOOLEAN" defaultValue="1">
                 <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="set_user_roles_fkeys" author="lmisaga">
-        <addForeignKeyConstraint baseTableName="user_roles" baseColumnNames="role_id"
-                                 constraintName="fk_user_roles_role_id"
-                                 referencedTableName="role"
-                                 referencedColumnNames="id"
-                                 onDelete="NO ACTION" />
+    <changeSet id="set_authorities_fk" author="lmisaga">
+        <addForeignKeyConstraint baseTableName="authorities" baseColumnNames="username"
+                                 constraintName="fk_authorities_username" referencedTableName="users"
+                                 referencedColumnNames="username" />
+    </changeSet>
 
-        <addForeignKeyConstraint baseTableName="user_roles"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_roles_user_id"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"
-                                 onDelete="NO ACTION" />
+    <changeSet id="set_index_authorities" author="lmisaga">
+        <createIndex tableName="authorities" indexName="idx_authorities">
+            <column name="username" />
+            <column name="authority" />
+        </createIndex>
     </changeSet>
 
     <changeSet id="set_defect_report_fkeys" author="lmisaga">
