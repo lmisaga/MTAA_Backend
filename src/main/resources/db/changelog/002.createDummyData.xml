@@ -51,7 +51,7 @@
             <column name="send_notification" value="false" />
             <column name="device_id"
                     valueComputed="(SELECT id FROM device WHERE product_code LIKE '%REORDERED2%' LIMIT 1)" />
-            <column name="device_type" value="ALL-IN-ONE" />
+            <column name="device_type" value="ALL_IN_ONE" />
             <column name="product_name" value="Product Number 4" />
         </insert>
     </changeSet>
