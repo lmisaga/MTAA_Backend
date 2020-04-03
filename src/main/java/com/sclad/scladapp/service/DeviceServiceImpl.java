@@ -2,6 +2,7 @@ package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.entity.DeviceType;
+import com.sclad.scladapp.exceptions.CategoryNotFoundException;
 import com.sclad.scladapp.exceptions.DeviceNotFoundException;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.repository.DeviceRepository;
@@ -44,9 +45,14 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public List<Device> listAllDevicesByType(DeviceType deviceType) {
-        //TODO
-        return null;
+    public List<Device> listAllDevicesByType(String deviceType) {
+        DeviceType type;
+        try {
+            type = DeviceType.valueOf(deviceType);
+        }catch (IllegalArgumentException e){
+            throw new CategoryNotFoundException();
+        }
+        return deviceRepository.findByDeviceType(type);
     }
 
     @Override
