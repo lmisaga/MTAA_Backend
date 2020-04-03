@@ -33,8 +33,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.jdbcAuthentication().dataSource(dataSource)
         .passwordEncoder(new BCryptPasswordEncoder())
-        .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-        .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username=?");
+        .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
+        .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
     }
 
 

@@ -1,6 +1,7 @@
 package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.User;
+import org.springframework.http.ResponseEntity;
 
 public interface UserService {
 
@@ -8,7 +9,10 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    void deleteUser(User user);
+    ResponseEntity<String> deleteUser(User user);
+
+    User updateUser(User updatedUser);
+
 
 
 

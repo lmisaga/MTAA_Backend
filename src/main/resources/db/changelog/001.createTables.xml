@@ -71,10 +71,11 @@
 
     <changeSet id="createRole" author="lmisaga">
         <createTable tableName="authorities">
+            <column name="id" type="BIGINT"/>
             <column name="username" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true" />
             </column>
-            <column name="authority" type="VARCHAR(100)">
+            <column name="authority" type="VARCHAR(50)">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -92,7 +93,7 @@
             <column name="username" type="VARCHAR(50)">
                 <constraints unique="true" primaryKey="true"/>
             </column>
-            <column name="enabled" type="BOOLEAN" defaultValue="1">
+            <column name="enabled" type="TINYINT" defaultValue="1">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -101,7 +102,7 @@
     <changeSet id="set_authorities_fk" author="lmisaga">
         <addForeignKeyConstraint baseTableName="authorities" baseColumnNames="username"
                                  constraintName="fk_authorities_username" referencedTableName="users"
-                                 referencedColumnNames="username" />
+                                 referencedColumnNames="username" onDelete="CASCADE"/>
     </changeSet>
 
     <changeSet id="set_index_authorities" author="lmisaga">
