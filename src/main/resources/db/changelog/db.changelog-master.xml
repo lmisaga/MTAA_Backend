@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
                    logicalFilePath="db.changelog-master.xml">
 
-    <include file="./001.createUserAndRoles.xml" relativeToChangelogFile="true" />
+    <include file="./001.createTables.xml" relativeToChangelogFile="true" />
     <include file="./002.createDummyData.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
