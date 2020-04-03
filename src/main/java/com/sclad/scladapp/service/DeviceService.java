@@ -14,7 +14,7 @@ public interface DeviceService extends AbstractService<Device> {
 
     List<Device> getAllDevices();
 
-    List<Device> listAllDevicesByType(DeviceType deviceType);
+    List<Device> listAllDevicesByType(String deviceType);
 
     Device updateDevice(DeviceModel updatedModel, Long id);
 

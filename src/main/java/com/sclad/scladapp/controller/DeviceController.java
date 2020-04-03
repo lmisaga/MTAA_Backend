@@ -36,7 +36,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "/listAllDevicesByType/{deviceType}", method = RequestMethod.GET)
-    public List<Device> listAllDevicesByCategory(@PathVariable DeviceType deviceType) {
+    public List<Device> listAllDevicesByCategory(@PathVariable String deviceType) {
         return deviceService.listAllDevicesByType(deviceType);
     }
 
