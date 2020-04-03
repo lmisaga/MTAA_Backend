@@ -4,6 +4,7 @@ import com.sclad.scladapp.entity.User;
 import com.sclad.scladapp.model.UserModel;
 import com.sclad.scladapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public void deleteUser(@RequestBody @Valid User user) {
         userService.deleteUser(user);

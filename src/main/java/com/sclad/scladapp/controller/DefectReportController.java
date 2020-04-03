@@ -4,6 +4,7 @@ import com.sclad.scladapp.entity.DefectReport;
 import com.sclad.scladapp.model.DefectReportModel;
 import com.sclad.scladapp.service.DefectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class DefectReportController {
         return defectReportService.getAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/resolve/{id}", method = RequestMethod.DELETE)
     public void resolve(@PathVariable Long id) {
         defectReportService.resolveFaultReport(id);

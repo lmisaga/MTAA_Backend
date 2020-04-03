@@ -2,6 +2,7 @@ package com.sclad.scladapp.controller;
 
 import com.sclad.scladapp.service.UploadedFileService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,7 @@ public class UploadedFileController {
         uploadedFileService.remove(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getById(@PathVariable Long id) {
         return uploadedFileService.downloadById(id);

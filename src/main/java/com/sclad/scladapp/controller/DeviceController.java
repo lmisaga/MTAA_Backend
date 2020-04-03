@@ -5,6 +5,7 @@ import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,11 +41,13 @@ public class DeviceController {
         return deviceService.listAllDevicesByType(deviceType);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/update/{id}", method = RequestMethod.PUT)
     public Device updateDevice(@RequestBody DeviceModel updatedModel, @PathVariable Long id) {
         return deviceService.updateDevice(updatedModel,id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public void deleteDevice(@PathVariable Long id) {
         deviceService.deleteDevice(id);
