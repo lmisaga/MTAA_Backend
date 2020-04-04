@@ -1,7 +1,6 @@
 package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.Device;
-import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.model.DeviceModel;
 
 import java.util.List;

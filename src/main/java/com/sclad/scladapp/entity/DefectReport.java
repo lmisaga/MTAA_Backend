@@ -14,10 +14,10 @@ public class DefectReport extends AbstractEntity {
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
-    @Column(name="date_of_discovery")
+    @Column(name = "date_of_discovery")
     private LocalDate dateOfDiscovery;
 
-    @Column(name="fault_description")
+    @Column(name = "fault_description")
     private String faultDescription;
 
     @OneToOne

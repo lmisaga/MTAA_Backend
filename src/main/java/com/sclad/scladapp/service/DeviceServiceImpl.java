@@ -51,7 +51,7 @@ public class DeviceServiceImpl implements DeviceService {
         DeviceType type;
         try {
             type = DeviceType.valueOf(deviceType);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new CategoryNotFoundException();
         }
         return deviceRepository.findByDeviceType(type);

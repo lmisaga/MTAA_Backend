@@ -34,6 +34,6 @@ public class RestockOrderServiceImpl implements RestockOrderService {
     @Override
     public RestockOrder getById(Long id) {
         return restockOrderRepository.findById(id)
-                .orElseThrow(()-> new DeviceNotFoundException(id));
+                .orElseThrow(() -> new DeviceNotFoundException(id));
     }
 }

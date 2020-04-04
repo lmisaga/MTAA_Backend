@@ -1,6 +1,5 @@
 package com.sclad.scladapp.config;
 
-import com.sclad.scladapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +33,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.jdbcAuthentication().dataSource(dataSource)
-        .passwordEncoder(new BCryptPasswordEncoder())
-        .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-        .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
+                .passwordEncoder(new BCryptPasswordEncoder())
+                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
+                .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
     }
 
 

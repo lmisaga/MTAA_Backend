@@ -29,7 +29,7 @@ public class UploadedFileController {
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable  Long id) {
+    public void remove(@PathVariable Long id) {
         uploadedFileService.remove(id);
     }
 
