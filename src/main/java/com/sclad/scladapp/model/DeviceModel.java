@@ -10,6 +10,7 @@ public class DeviceModel extends AbstractModel {
     @NotNull
     private String productName;
 
+    @NotNull
     @NotBlank(message = "Product code needs to be filled!")
     private String productCode;
 

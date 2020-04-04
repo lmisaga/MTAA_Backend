@@ -47,7 +47,7 @@ public class ScheduledTasks {
             }
         }
         List<Device> updatedDevices = deviceRepository.findAll();
-        updatedDevices.stream().filter(device -> !device.getReordered()).forEach(device -> {
+        updatedDevices.stream().filter(device -> !Boolean.TRUE.equals(device.getReordered())).forEach(device -> {
             if (device.getQuantity() >= device.getQuantityThreshold()) {
                 Random random = new Random();
                 Integer randomQuantity = device.getQuantityThreshold() > 1 ? Math.abs(random.nextInt()) % device.getQuantityThreshold() : 1;

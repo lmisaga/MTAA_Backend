@@ -29,7 +29,7 @@ public class DeviceServiceImpl implements DeviceService {
         device.setProductCode(model.getProductCode());
         device.setQuantity(model.getQuantity());
         device.setQuantityThreshold(model.getQuantityThreshold());
-        device.setReordered(model.getReordered());
+        device.setReordered(Boolean.TRUE.equals(model.getReordered()));
         device.setDeviceType(model.getDeviceType());
         deviceRepository.save(device);
         return device;

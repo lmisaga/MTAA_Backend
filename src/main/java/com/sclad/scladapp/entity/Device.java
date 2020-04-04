@@ -20,7 +20,7 @@ public class Device extends AbstractEntity {
     private Integer quantity;
 
     @Column
-    private Integer quantityThreshold;
+    private Integer quantityThreshold = 1;
 
     @Column
     private Boolean isReordered;
