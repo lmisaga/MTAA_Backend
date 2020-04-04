@@ -1,7 +1,6 @@
 package com.sclad.scladapp.controller;
 
 import com.sclad.scladapp.entity.Device;
-import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;

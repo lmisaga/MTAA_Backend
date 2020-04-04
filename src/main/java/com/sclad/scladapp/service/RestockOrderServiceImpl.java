@@ -3,6 +3,7 @@ package com.sclad.scladapp.service;
 import com.sclad.scladapp.entity.RestockOrder;
 import com.sclad.scladapp.exceptions.DeviceNotFoundException;
 import com.sclad.scladapp.model.RestockOrderModel;
+import com.sclad.scladapp.repository.DeviceRepository;
 import com.sclad.scladapp.repository.RestockOrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,13 @@ import org.springframework.stereotype.Service;
 public class RestockOrderServiceImpl implements RestockOrderService {
 
     private final RestockOrderRepository restockOrderRepository;
+    private final DeviceRepository deviceRepository;
     private final DeviceService deviceService;
 
-    public RestockOrderServiceImpl(RestockOrderRepository restockOrderRepository, DeviceService deviceService) {
+
+    public RestockOrderServiceImpl(RestockOrderRepository restockOrderRepository, DeviceRepository deviceRepository, DeviceService deviceService) {
         this.restockOrderRepository = restockOrderRepository;
+        this.deviceRepository = deviceRepository;
         this.deviceService = deviceService;
     }
 
@@ -22,6 +26,8 @@ public class RestockOrderServiceImpl implements RestockOrderService {
         RestockOrder restockOrder = new RestockOrder();
         if (deviceService.getById(model.getDevice().getId()) != null) {
             restockOrder.setDevice(model.getDevice());
+            model.getDevice().setReordered(Boolean.TRUE);
+            deviceRepository.save(model.getDevice());
         }
         restockOrder.setProductName(model.getProductName());
         restockOrder.setDeviceType(model.getDeviceType());
