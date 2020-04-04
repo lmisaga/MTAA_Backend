@@ -6,6 +6,7 @@ import com.sclad.scladapp.model.RestockOrderModel;
 import com.sclad.scladapp.service.RestockOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @RestController
@@ -19,12 +20,12 @@ public class RestockOrderController {
         this.restockOrderService = restockOrderService;
     }
 
-    @RequestMapping(value="/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public RestockOrder create(@RequestBody @Valid RestockOrderModel model) {
         return restockOrderService.create(model);
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RestockOrder getById(@PathVariable Long id) {
         return restockOrderService.getById(id);
     }

@@ -1,7 +1,10 @@
 package com.sclad.scladapp.entity;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
 @Table(name = "uploaded_file")
 @Entity
@@ -17,7 +20,8 @@ public class UploadedFile extends AbstractEntity {
     @Lob
     private byte[] data;
 
-    public UploadedFile() {}
+    public UploadedFile() {
+    }
 
     public UploadedFile(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;

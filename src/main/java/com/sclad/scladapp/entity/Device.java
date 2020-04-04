@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Table
 @Entity
-public class Device extends AbstractEntity{
+public class Device extends AbstractEntity {
 
     @Column
     @NotNull
