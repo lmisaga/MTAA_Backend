@@ -10,14 +10,19 @@ import org.springframework.stereotype.Service;
 public class RestockOrderServiceImpl implements RestockOrderService {
 
     private final RestockOrderRepository restockOrderRepository;
+    private final DeviceService deviceService;
 
-    public RestockOrderServiceImpl(RestockOrderRepository restockOrderRepository) {
+    public RestockOrderServiceImpl(RestockOrderRepository restockOrderRepository, DeviceService deviceService) {
         this.restockOrderRepository = restockOrderRepository;
+        this.deviceService = deviceService;
     }
 
     @Override
     public RestockOrder create(RestockOrderModel model) {
         RestockOrder restockOrder = new RestockOrder();
+        if (deviceService.getById(model.getDevice().getId()) != null) {
+            restockOrder.setDevice(model.getDevice());
+        }
         restockOrder.setProductName(model.getProductName());
         restockOrder.setDeviceType(model.getDeviceType());
         restockOrder.setQuantityToReorder(model.getQuantityToReorder());

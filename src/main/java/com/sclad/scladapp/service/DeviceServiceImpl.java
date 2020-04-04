@@ -3,9 +3,11 @@ package com.sclad.scladapp.service;
 import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.exceptions.CategoryNotFoundException;
+import com.sclad.scladapp.exceptions.DeviceCouldNotBeDeletedException;
 import com.sclad.scladapp.exceptions.DeviceNotFoundException;
 import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.repository.DeviceRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -75,8 +77,10 @@ public class DeviceServiceImpl implements DeviceService {
     public void deleteDevice(Long id) {
         try {
             deviceRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException ex) {
             throw new DeviceNotFoundException(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DeviceCouldNotBeDeletedException();
         }
 
     }
