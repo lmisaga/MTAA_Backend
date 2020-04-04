@@ -25,8 +25,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+        httpSecurity.logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
+                .logoutUrl("/api/user/logout")
+                .logoutSuccessUrl("/api/user/login")
+                .deleteCookies("JSESSIONID", "auth_code")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll()
+        ).csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/user/register").permitAll()
+                .antMatchers("/api/user/login").permitAll()
+                .anyRequest().authenticated()
                 .and().httpBasic();
     }
 

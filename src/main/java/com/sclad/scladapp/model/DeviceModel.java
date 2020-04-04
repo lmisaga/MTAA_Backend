@@ -2,12 +2,24 @@ package com.sclad.scladapp.model;
 
 import com.sclad.scladapp.entity.DeviceType;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class DeviceModel extends AbstractModel {
+
+    @NotNull
     private String productName;
+
+    @NotBlank(message = "Product code needs to be filled!")
     private String productCode;
+
+    @NotNull
     private Integer quantity;
-    private Integer quantityTreshold;
+
+    private Integer quantityThreshold = 1;
+
     private Boolean isReordered;
+
     private DeviceType deviceType;
 
     public String getProductName() {
@@ -34,12 +46,12 @@ public class DeviceModel extends AbstractModel {
         this.quantity = quantity;
     }
 
-    public Integer getQuantityTreshold() {
-        return quantityTreshold;
+    public Integer getQuantityThreshold() {
+        return quantityThreshold;
     }
 
-    public void setQuantityTreshold(Integer quantityTreshold) {
-        this.quantityTreshold = quantityTreshold;
+    public void setQuantityThreshold(Integer quantityThreshold) {
+        this.quantityThreshold = quantityThreshold;
     }
 
     public Boolean getReordered() {

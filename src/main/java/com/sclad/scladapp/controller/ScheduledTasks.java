@@ -37,7 +37,7 @@ public class ScheduledTasks {
                 Device device = restockedDevice.get();
                 device.setQuantity(device.getQuantity() + restockOrder.getQuantityToReorder());
                 if (Boolean.TRUE.equals(restockOrder.getSendNotification())) {
-                    logger.info("Device " + device.getProductCode() + " " + device.getProductName() + " has been restocked");
+                    sendRestockedNotification(device.getProductCode(), device.getProductName());
                 }
                 device.setReordered(Boolean.FALSE);
                 restockOrderRepository.delete(restockOrder);
@@ -59,11 +59,17 @@ public class ScheduledTasks {
         sendLowStockNotification(updatedDevices);
     }
 
-    protected void sendLowStockNotification(List<Device> devices) {
+    //PUSH notifications using Firebase [sendLowStockNotification, sendRestockedNotification] - TBD
+
+    private void sendLowStockNotification(List<Device> devices) {
         devices.forEach(device -> {
-            if (device.getQuantity() <= device.getQuantityThreshold()) {
+            if (device.getQuantity() < device.getQuantityThreshold()) {
                 logger.info("Device " + device.getProductCode() + " " + device.getProductName() + " has low stocks.");
             }
         });
+    }
+
+    private void sendRestockedNotification(String productCode, String productName) {
+        logger.info("Device " + productCode + " " + productName + " has been restocked");
     }
 }

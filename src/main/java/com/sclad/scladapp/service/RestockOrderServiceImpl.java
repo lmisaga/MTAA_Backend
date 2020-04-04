@@ -14,7 +14,6 @@ public class RestockOrderServiceImpl implements RestockOrderService {
     private final DeviceRepository deviceRepository;
     private final DeviceService deviceService;
 
-
     public RestockOrderServiceImpl(RestockOrderRepository restockOrderRepository, DeviceRepository deviceRepository, DeviceService deviceService) {
         this.restockOrderRepository = restockOrderRepository;
         this.deviceRepository = deviceRepository;

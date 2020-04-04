@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User updatedUser) {
         User user = userRepository.findById(updatedUser.getId()).orElse(null);
-        if (user != null) {
+        if (user != null && updatedUser.getUsername().equals(user.getUsername())) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             return userRepository.save(updatedUser);
         } else {

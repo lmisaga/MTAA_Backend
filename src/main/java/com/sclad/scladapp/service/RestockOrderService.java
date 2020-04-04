@@ -4,7 +4,6 @@ import com.sclad.scladapp.entity.RestockOrder;
 import com.sclad.scladapp.model.RestockOrderModel;
 
 public interface RestockOrderService extends AbstractService<RestockOrder> {
-    RestockOrder create(RestockOrderModel model);
 
-    RestockOrder getById(Long id);
+    RestockOrder create(RestockOrderModel model);
 }
