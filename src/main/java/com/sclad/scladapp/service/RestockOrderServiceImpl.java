@@ -23,10 +23,12 @@ public class RestockOrderServiceImpl implements RestockOrderService {
     @Override
     public RestockOrder create(RestockOrderModel model) {
         RestockOrder restockOrder = new RestockOrder();
-        if (deviceService.getById(model.getDevice().getId()) != null) {
+        if (deviceService.getById(model.getDevice().getId()) != null && !Boolean.TRUE.equals(model.getDevice().getReordered())) {
             restockOrder.setDevice(model.getDevice());
             model.getDevice().setReordered(Boolean.TRUE);
             deviceRepository.save(model.getDevice());
+        } else {
+            throw new DeviceNotFoundException(model.getDevice().getId());
         }
         restockOrder.setProductName(model.getProductName());
         restockOrder.setDeviceType(model.getDeviceType());
