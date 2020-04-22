@@ -16,4 +16,6 @@ public interface DeviceService extends AbstractService<Device> {
     Device updateDevice(DeviceModel updatedModel, Long id);
 
     void deleteDevice(Long id);
+
+    Device getDeviceByProductName(String productName);
 }

@@ -82,6 +82,10 @@ public class DeviceServiceImpl implements DeviceService {
         } catch (DataIntegrityViolationException ex) {
             throw new DeviceCouldNotBeDeletedException();
         }
+    }
 
+    public Device getDeviceByProductName(String productName) {
+        return deviceRepository.findByProductNameLike(productName)
+                .orElseThrow(() -> new DeviceNotFoundException(-1L));
     }
 }
