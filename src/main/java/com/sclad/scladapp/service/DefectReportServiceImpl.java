@@ -1,9 +1,11 @@
 package com.sclad.scladapp.service;
 
 import com.sclad.scladapp.entity.DefectReport;
+import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.exceptions.DefectReportNotFoundException;
 import com.sclad.scladapp.model.DefectReportModel;
 import com.sclad.scladapp.repository.DefectReportRepository;
+import com.sclad.scladapp.repository.DeviceRepository;
 import com.sclad.scladapp.repository.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,20 +17,25 @@ public class DefectReportServiceImpl implements DefectReportService {
 
     private final DefectReportRepository defectReportRepository;
     private final DeviceService deviceService;
+    private final DeviceRepository deviceRepository;
     private final UploadedFileRepository uploadedFileRepository;
 
     @Autowired
-    public DefectReportServiceImpl(DefectReportRepository defectReportRepository, DeviceService deviceService, UploadedFileRepository uploadedFileRepository) {
+    public DefectReportServiceImpl(DefectReportRepository defectReportRepository, DeviceService deviceService, DeviceRepository deviceRepository, UploadedFileRepository uploadedFileRepository) {
         this.defectReportRepository = defectReportRepository;
         this.deviceService = deviceService;
+        this.deviceRepository = deviceRepository;
         this.uploadedFileRepository = uploadedFileRepository;
     }
 
     @Override
     public DefectReport create(DefectReportModel model) {
         DefectReport defectReport = new DefectReport();
-        if (deviceService.getById(model.getDevice().getId()) != null) {
+        if (model.getDevice() != null && deviceService.getById(model.getDevice().getId()) != null) {
             defectReport.setDevice(model.getDevice());
+        } else if (model.getProductName() != null) {
+            Device device = deviceRepository.findByProductNameLike(model.getProductName()).orElse(null);
+            defectReport.setDevice(device);
         }
         defectReport.setDateOfDiscovery(model.getDateOfDiscovery());
         defectReport.setDeviceSerialNumber(model.getDeviceSerialNumber());

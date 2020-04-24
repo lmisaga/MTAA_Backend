@@ -14,6 +14,8 @@ public class DefectReportModel extends AbstractModel {
 
     private Device device;
 
+    private String productName;
+
     @NotNull
     private LocalDate dateOfDiscovery;
 
@@ -61,5 +63,13 @@ public class DefectReportModel extends AbstractModel {
 
     public void setAttachmentId(Long attachmentId) {
         this.attachmentId = attachmentId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }
