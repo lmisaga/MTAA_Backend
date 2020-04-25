@@ -3,6 +3,7 @@ package com.sclad.scladapp.service;
 import com.sclad.scladapp.entity.DefectReport;
 import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.exceptions.DefectReportNotFoundException;
+import com.sclad.scladapp.exceptions.DeviceNotFoundException;
 import com.sclad.scladapp.model.DefectReportModel;
 import com.sclad.scladapp.repository.DefectReportRepository;
 import com.sclad.scladapp.repository.DeviceRepository;
@@ -35,7 +36,11 @@ public class DefectReportServiceImpl implements DefectReportService {
             defectReport.setDevice(model.getDevice());
         } else if (model.getProductName() != null) {
             Device device = deviceRepository.findByProductNameLike(model.getProductName()).orElse(null);
-            defectReport.setDevice(device);
+            if (device != null) {
+                defectReport.setDevice(device);
+            } else {
+                throw new DeviceNotFoundException(-1L);
+            }
         }
         defectReport.setDateOfDiscovery(model.getDateOfDiscovery());
         defectReport.setDeviceSerialNumber(model.getDeviceSerialNumber());

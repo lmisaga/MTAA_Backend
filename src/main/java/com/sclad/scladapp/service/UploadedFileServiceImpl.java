@@ -82,7 +82,7 @@ public class UploadedFileServiceImpl implements UploadedFileService {
     }
 
     public UploadedFile getByFileName(String fileName) {
-        UploadedFile uploadedFile = uploadedFileRepository.findByFileName(fileName).orElse(null);
+        UploadedFile uploadedFile = uploadedFileRepository.findFirstByFileName(fileName).orElse(null);
         if (uploadedFile != null) {
             return uploadedFile;
         } else {
