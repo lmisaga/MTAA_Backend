@@ -9,6 +9,7 @@ import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.repository.DeviceRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
     private final AuthorityRepository authorityRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;

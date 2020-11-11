@@ -6,6 +6,7 @@ import com.sclad.scladapp.exceptions.UploadedFileNotFoundException;
 import com.sclad.scladapp.repository.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class UploadedFileServiceImpl implements UploadedFileService {
     public UploadedFile getById(Long id) {
         UploadedFile uploadedFile = uploadedFileRepository.findById(id).orElse(null);
         if (uploadedFile != null) {
+        	ResponseEntity<UploadedFile> file = new ResponseEntity<UploadedFile>(HttpStatus.OK);
             return uploadedFile;
         } else {
             throw new UploadedFileNotFoundException();

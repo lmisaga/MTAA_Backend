@@ -6,6 +6,8 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "restock_order")
 public class RestockOrder extends AbstractEntity {
