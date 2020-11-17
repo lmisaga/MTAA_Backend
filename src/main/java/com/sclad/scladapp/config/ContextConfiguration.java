@@ -7,6 +7,4 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.sclad.scladapp.service")
 public class ContextConfiguration {
 
-
-
 }

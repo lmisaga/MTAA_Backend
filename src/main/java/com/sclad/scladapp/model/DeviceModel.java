@@ -14,14 +14,13 @@ public class DeviceModel extends AbstractModel {
     @NotBlank(message = "Product code needs to be filled!")
     private String productCode;
 
-    @NotNull
-    private Integer quantity;
+    private Integer quantity = 10;
 
     private Integer quantityThreshold = 1;
 
     private Boolean isReordered;
 
-    private DeviceType deviceType;
+    private DeviceType deviceType = DeviceType.NOTEBOOK;
 
     public String getProductName() {
         return productName;

@@ -20,6 +20,7 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Device create(@RequestBody DeviceModel model) {
         return deviceService.create(model);

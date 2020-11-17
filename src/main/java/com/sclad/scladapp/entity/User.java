@@ -21,7 +21,7 @@ public class User extends AbstractEntity {
 	@Unique(message = "Username is already taken!")
     private String username;
 
-	@NotBlank(message = "Please provide password.")
+	@NotBlank(message = "Insufficient password provided.")
 	@Length(min = 5, max = 63)
     private String password;
 

@@ -4,9 +4,11 @@ import com.sclad.scladapp.entity.User;
 import com.sclad.scladapp.model.UserModel;
 import org.springframework.http.ResponseEntity;
 
+import javax.validation.Valid;
+
 public interface UserService {
 
-    Long register(UserModel user);
+    Long register(@Valid UserModel user);
 
     User getUserByUsername(String username);
 

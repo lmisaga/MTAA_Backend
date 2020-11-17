@@ -9,12 +9,14 @@ import com.sclad.scladapp.model.DeviceModel;
 import com.sclad.scladapp.repository.DeviceRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
+@Validated
 public class DeviceServiceImpl implements DeviceService {
 
     private final DeviceRepository deviceRepository;
@@ -24,7 +26,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device create(DeviceModel model) {
+    public Device create(@Valid DeviceModel model) {
         Device device = new Device();
         device.setProductName(model.getProductName());
         device.setProductCode(model.getProductCode());
@@ -85,8 +87,15 @@ public class DeviceServiceImpl implements DeviceService {
         }
     }
 
+    @Override
     public Device getDeviceByProductName(String productName) {
         return deviceRepository.findByProductNameLike(productName)
                 .orElseThrow(() -> new DeviceNotFoundException(-1L));
     }
+
+    @Override
+    public Device getSingleDeviceByProductName(String productName) {
+    	return deviceRepository.findFirstByProductNameLike(productName)
+				.orElseThrow(() -> new DeviceNotFoundException(-1L));
+	}
 }

@@ -1,28 +1,27 @@
 package com.sclad.scladapp.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.sclad.scladapp.model.validation.EmailConstraint;
 
 public class UserModel extends AbstractModel {
 
-    @Email(message = "Email should be valid: <name>@sClad.sk")
+    @Email(message = "Email should be valid: <name>@<domain>.xxx")
 	@EmailConstraint(message = "Email does not contain company domain name!")
     private String email;
 
-    @NotBlank(message = "Username is mandatory.")
-	@Min(5)
-    @Max(50)
+    @NotBlank(message = "Invalid username provided!")
+	@Length(min = 5, max = 50)
 	private String username;
 
-    @NotBlank(message = "Please provide password.")
-	@Min(5)
+    @NotBlank(message = "Insufficient password provided!")
+	@Length(min = 5)
     private String password;
 
-    @NotBlank(message = "Provide matching passwords.")
+    @NotBlank(message = "Please provide password confirmation!")
     private String passwordConfirm;
 
     public String getEmail() {

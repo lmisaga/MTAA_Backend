@@ -6,14 +6,17 @@ import com.sclad.scladapp.exceptions.UserNotFoundException;
 import com.sclad.scladapp.model.UserModel;
 import com.sclad.scladapp.repository.AuthorityRepository;
 import com.sclad.scladapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 @Service
+@Validated
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long register(UserModel userModel) {
+    public Long register(@Valid UserModel userModel) {
         User user = new User();
         user.setUsername(userModel.getUsername());
         if (!userModel.getPassword().equals(userModel.getPasswordConfirm())) {
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService {
         //set "admin" role if username contains "admin," otherwise set user as "user" role
         Authority role = new Authority();
         role.setUsername(userModel.getUsername());
-        role.setAuthority(userModel.getUsername().contains("admin") ? "ROLE_ADMIN" : "ROLE_USER");
+        role.setAuthority(userModel.getUsername().toLowerCase().contains("admin") ? "ROLE_ADMIN" : "ROLE_USER");
         userRepository.save(user);
         authorityRepository.save(role);
         return user.getId();

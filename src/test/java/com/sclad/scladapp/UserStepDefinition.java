@@ -1,15 +1,19 @@
 package com.sclad.scladapp;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import static org.junit.Assert.*;
 
 import javax.validation.ValidationException;
 
+import com.sclad.scladapp.entity.User;
 import com.sclad.scladapp.model.UserModel;
 import com.sclad.scladapp.service.UserService;
 
@@ -27,9 +31,14 @@ public class UserStepDefinition extends SpringIntegrationTest {
 	@Value("common.organization.title")
 	private String organizationTitle;
 
-	@BeforeEach
+	@Before
 	public void beforeEach() {
 		userRegisterModel = new UserModel();
+		User user;
+		try {
+			user = userService.getUserByUsername("exampleUser");
+			userService.deleteUser(user);
+		} catch (UsernameNotFoundException ignored) {}
 	}
 
 	@When("User is providing email with value {string}")
@@ -68,13 +77,16 @@ public class UserStepDefinition extends SpringIntegrationTest {
 	}
 
 	@Then("registration process should succeed and user ID should be returned")
-	public boolean registrationProcessShouldSucceedAndUserIDShouldBeReturned() {
-		return userService.register(userRegisterModel) > 0L;
+	public void registrationProcessShouldSucceedAndUserIDShouldBeReturned() {
+		assert(userService.register(userRegisterModel) > 0L);
 	}
 
-	@After("@correctRegistrationScenario")
+	@After("@Tag")
 	public void afterCreatingUser() {
-		userService.deleteUser(userService.getUserByUsername(userRegisterModel.getUsername()));
+		try {
+			userService.deleteUser(userService.getUserByUsername(userRegisterModel.getUsername()));
+		} catch (Exception ignored) {
+		}
 	}
 
 	@Then("registration process should fail and error code saying wrong email domain has been provided")
@@ -85,5 +97,15 @@ public class UserStepDefinition extends SpringIntegrationTest {
 		} catch (ValidationException exception) {
 			return true;
 		}
+	}
+
+	@Then("registration process should fail and error code saying insufficient password has been provided")
+	public void registrationProcessShouldFailAndErrorCodeSayingInsufficientPasswordHasBeenProvided() {
+		boolean retval = true;
+		try {
+			userService.register(userRegisterModel);
+			retval = false;
+		} catch (ValidationException ignored) {}
+		assertTrue(retval);
 	}
 }
