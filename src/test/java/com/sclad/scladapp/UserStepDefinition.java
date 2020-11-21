@@ -3,8 +3,11 @@ package com.sclad.scladapp;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +21,8 @@ import com.sclad.scladapp.model.UserModel;
 import com.sclad.scladapp.service.UserService;
 
 public class UserStepDefinition extends SpringIntegrationTest {
+
+	private final Logger logger = LoggerFactory.getLogger(UserStepDefinition.class);
 
 	private final UserService userService;
 
@@ -46,8 +51,9 @@ public class UserStepDefinition extends SpringIntegrationTest {
 		userRegisterModel.setEmail(email);
 	}
 
-	@And("company name is {string}")
+	@Given("company name is {string}")
 	public boolean companyNameIs(String companyName) {
+		logger.info("Current company name: " + organizationTitle + ", provided company name: " + companyName);
 		if (companyName.equals(organizationTitle)) {
 			organizationTitle = companyName;
 			return true;
@@ -79,6 +85,7 @@ public class UserStepDefinition extends SpringIntegrationTest {
 	@Then("registration process should succeed and user ID should be returned")
 	public void registrationProcessShouldSucceedAndUserIDShouldBeReturned() {
 		assert(userService.register(userRegisterModel) > 0L);
+		logger.info("User successfully registered.");
 	}
 
 	@After("@Tag")
@@ -95,6 +102,7 @@ public class UserStepDefinition extends SpringIntegrationTest {
 			userService.register(userRegisterModel);
 			return false;
 		} catch (ValidationException exception) {
+			logger.info("Registration failed with following exception: " + exception.getMessage());
 			return true;
 		}
 	}
@@ -105,7 +113,9 @@ public class UserStepDefinition extends SpringIntegrationTest {
 		try {
 			userService.register(userRegisterModel);
 			retval = false;
-		} catch (ValidationException ignored) {}
+		} catch (ValidationException exception) {
+			logger.info("Registration failed with following exception: " + exception.getMessage());
+		}
 		assertTrue(retval);
 	}
 }

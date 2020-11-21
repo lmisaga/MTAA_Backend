@@ -18,7 +18,7 @@ public class UserModel extends AbstractModel {
 	private String username;
 
     @NotBlank(message = "Insufficient password provided!")
-	@Length(min = 5)
+	@Length(min = 5, max = 63)
     private String password;
 
     @NotBlank(message = "Please provide password confirmation!")

@@ -1,5 +1,7 @@
 package com.sclad.scladapp;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -9,6 +11,7 @@ import io.cucumber.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +23,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sclad.scladapp.controller.ScheduledTasks;
 import com.sclad.scladapp.entity.Device;
 import com.sclad.scladapp.entity.DeviceType;
 import com.sclad.scladapp.entity.User;
@@ -32,13 +36,18 @@ import com.sclad.scladapp.service.UserService;
 
 public class DeviceStepDefinition extends SpringIntegrationTest {
 
+	@Value("${scheduledTask.taskFixedDelay}")
+	private Integer taskFixedDelay;
+
 	private final DeviceService deviceService;
 	private final UserService userService;
 	private final UserRepository userRepository;
 	private final AuthorityRepository authorityRepository;
+	private final ScheduledTasks scheduledTasks;
 
 	private User loggedUser = null;
 	private List<Device> devicesByCategory;
+	private List<Device> devicesByStock;
 	private DeviceModel deviceCreateModel = new DeviceModel();
 	private Device createdDevice = null;
 	private String exceptionMessage = null;
@@ -47,11 +56,12 @@ public class DeviceStepDefinition extends SpringIntegrationTest {
 
 	@Autowired
 	public DeviceStepDefinition(DeviceService deviceService, UserService userService, UserRepository userRepository,
-								AuthorityRepository authorityRepository) {
+								AuthorityRepository authorityRepository, ScheduledTasks scheduledTasks) {
 		this.deviceService = deviceService;
 		this.userService = userService;
 		this.userRepository = userRepository;
 		this.authorityRepository = authorityRepository;
+		this.scheduledTasks = scheduledTasks;
 	}
 
 	@Before
@@ -172,5 +182,29 @@ public class DeviceStepDefinition extends SpringIntegrationTest {
 		System.out.println(exceptionMessage);
 		assert exceptionMessage != null && exceptionMessage.toLowerCase().contains("product code");
 		logger.info("Exception message displayed: " + exceptionMessage);
+	}
+
+	@And("there is configuration for scheduled tasks present")
+	public void thereIsConfigurationForScheduledTasksPresent() {
+		assertThat(taskFixedDelay != null);
+		logger.info("Time value for scheduled tasks is set at [ms]: " + taskFixedDelay);
+	}
+
+	@When("a scheduled task for stock check has been executed")
+	public void aScheduledTaskForStockCheckHasBeenExecuted() {
+		devicesByStock = scheduledTasks.simulateStockManipulation();
+	}
+
+	@Then("list of insufficiently stocked devices is returned")
+	public void listOfInsufficientlyStockedDevicesIsReturned() {
+		assertThat(devicesByStock != null);
+		if (devicesByStock != null) {
+			logger.info("List of " + devicesByStock.size() + " insufficiently stocked device has been found.");
+		}
+	}
+
+	@And("system prints out information about these devices")
+	public void systemPrintsOutInformationAboutTheseDevices() {
+		//checked manually
 	}
 }

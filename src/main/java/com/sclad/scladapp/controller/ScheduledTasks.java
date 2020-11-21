@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class ScheduledTasks {
     }
 
     @Scheduled(fixedDelayString = "${scheduledTask.taskFixedDelay}")
-    public void simulateStockManipulation() {
+    public List<Device> simulateStockManipulation() {
         logger.info("Executing SimulatedStockManipulation scheduled task");
         List<RestockOrder> restockOrders = restockOrderRepository.findAll();
         for (RestockOrder restockOrder : restockOrders) {
@@ -56,17 +57,21 @@ public class ScheduledTasks {
         });
 
         deviceRepository.saveAll(updatedDevices);
-        sendLowStockNotification(updatedDevices);
+        List<Device> returnList = sendLowStockNotification(updatedDevices);
+        return returnList;
     }
 
     //PUSH notifications using Firebase [sendLowStockNotification, sendRestockedNotification] - TBD
 
-    private void sendLowStockNotification(List<Device> devices) {
+    private List<Device> sendLowStockNotification(List<Device> devices) {
+    	List<Device> returnList = new ArrayList<>();
         devices.forEach(device -> {
             if (device.getQuantity() < device.getQuantityThreshold()) {
                 logger.info("Device " + device.getProductCode() + " " + device.getProductName() + " has low stocks.");
+                returnList.add(device);
             }
         });
+        return returnList;
     }
 
     private void sendRestockedNotification(String productCode, String productName) {
