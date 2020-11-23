@@ -33,7 +33,7 @@ public class UserStepDefinition extends SpringIntegrationTest {
 
 	private UserModel userRegisterModel = new UserModel();
 
-	@Value("common.organization.title")
+	@Value("${common.organization.title}")
 	private String organizationTitle;
 
 	@Before
@@ -62,11 +62,6 @@ public class UserStepDefinition extends SpringIntegrationTest {
 		}
 	}
 
-	@Then("registration process should fail and error code should be returned")
-	public boolean registrationProcessFailureOnBadEmail() {
-		return userService.register(userRegisterModel) > 0L;
-	}
-
 	@And("user provides unique username {string}")
 	public void userProvidesUsername(String userName) {
 		userRegisterModel.setUsername(userName);
@@ -86,6 +81,11 @@ public class UserStepDefinition extends SpringIntegrationTest {
 	public void registrationProcessShouldSucceedAndUserIDShouldBeReturned() {
 		assert(userService.register(userRegisterModel) > 0L);
 		logger.info("User successfully registered.");
+	}
+
+	@Then("registration process should fail and error code should be returned")
+	public boolean registrationProcessFailureOnBadEmail() {
+		return userService.register(userRegisterModel) > 0L;
 	}
 
 	@After("@Tag")
